@@ -7,11 +7,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-/**
- * CityModel
- */
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
-@Table( name = "tl_cities" )
+@Table( name = "sys_cities" )
 public class City
 {
     @Id
@@ -23,6 +25,4 @@ public class City
 
     @Column( nullable = false, length = 2 )
     private String country;
-
-    
 }

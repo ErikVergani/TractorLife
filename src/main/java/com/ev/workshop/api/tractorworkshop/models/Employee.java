@@ -9,17 +9,25 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
-/**
- * Employe
- */
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
-@Table( name = "tl_employers" )
+@Table( name = "sys_employers" )
 public class Employee 
 {
     @Id
     @OneToOne
     @JoinColumn( name = "ref_user", referencedColumnName = "id" )
     private User userId;
+
+    @Column( nullable = false )
+    private String login;
+
+    @Column( nullable = false )
+    private String password;
 
     @Column( nullable = false )
     private double salary;

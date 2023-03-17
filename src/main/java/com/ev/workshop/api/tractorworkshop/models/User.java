@@ -8,12 +8,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * PersonModel
- */
+@Getter
+@Setter
 @Entity
-@Table( name = "tl_users" )
+@Table( name = "sys_users" )
 public class User {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
@@ -50,100 +51,4 @@ public class User {
 
     @Column( nullable = false )
     private double balanceLimit;
-
-    
-    public User() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public long getPhoneNumber1() {
-        return phoneNumber1;
-    }
-
-    public void setPhoneNumber1(long phoneNumber1) {
-        this.phoneNumber1 = phoneNumber1;
-    }
-
-    public long getPhoneNumber2() {
-        return phoneNumber2;
-    }
-
-    public void setPhoneNumber2(long phoneNumber2) {
-        this.phoneNumber2 = phoneNumber2;
-    }
-
-    public Date getRegistrationDate() {
-        return registrationDate;
-    }
-
-    public void setRegistrationDate(Date registrationDate) {
-        this.registrationDate = registrationDate;
-    }
-
-    public Integer getCity() {
-        return city;
-    }
-
-    public void setCity(Integer city) {
-        this.city = city;
-    }
-
-    public Integer getUserType() {
-        return userType;
-    }
-
-    public void setUserType(Integer userType) {
-        this.userType = userType;
-    }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
-
-    public double getBalanceLimit() {
-        return balanceLimit;
-    }
-
-    public void setBalanceLimit(double balanceLimit) {
-        this.balanceLimit = balanceLimit;
-    }
-
-  
-
-    
 }

@@ -10,9 +10,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
-@Table( name = "tl_service_orders" )
+@Table( name = "sys_service_orders" )
 public class ServiceOrder {
     
     @Id

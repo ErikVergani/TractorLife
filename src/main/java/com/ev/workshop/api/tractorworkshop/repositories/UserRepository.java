@@ -9,6 +9,4 @@ import com.ev.workshop.api.tractorworkshop.models.User;
  */
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-
-    User getUserById(Integer id);
 }
