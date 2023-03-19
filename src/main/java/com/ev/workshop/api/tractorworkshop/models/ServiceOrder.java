@@ -31,7 +31,7 @@ public class ServiceOrder {
     private User userId;
 
     @Column( nullable = false )
-    private double osValue;
+    private double soValue;
 
     @Column( nullable = false )
     private Integer serviceProducts;

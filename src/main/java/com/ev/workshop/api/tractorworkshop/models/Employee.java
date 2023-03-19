@@ -4,9 +4,6 @@ import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import lombok.Getter;
@@ -16,13 +13,9 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table( name = "sys_employers" )
-public class Employee 
+public class Employee
+    extends User
 {
-    @Id
-    @OneToOne
-    @JoinColumn( name = "ref_user", referencedColumnName = "id" )
-    private User userId;
-
     @Column( nullable = false )
     private String login;
 
@@ -32,13 +25,9 @@ public class Employee
     @Column( nullable = false )
     private double salary;
 
-    @Column( nullable = false )
+    @Column( nullable = true )
     private Date startDate;
 
     @Column( nullable = true )
     private Date endDate;
-
-    @Column( nullable = false )
-    private Integer role;
-
 }

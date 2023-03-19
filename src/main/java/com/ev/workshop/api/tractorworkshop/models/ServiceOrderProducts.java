@@ -27,8 +27,11 @@ public class ServiceOrderProducts {
 
     @Column( nullable = false )
     private Integer qtyUsed;
+    
+    @Column( nullable = false )
+    private double unitPrice;
 
     @Column( nullable = false )
-    private double price;
+    private double totalPrice;
 
 }
