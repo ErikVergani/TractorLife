@@ -3,6 +3,8 @@ package com.ev.workshop.api.tractorworkshop.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ev.workshop.api.tractorworkshop.models.Employee;
@@ -17,16 +19,19 @@ import lombok.Setter;
 @Service
 public class EmployeeService {
 
-    final EmployeeRepository employeeRepository; 
+    public final EmployeeRepository employeeRepository; 
+    private PasswordEncoder encoder;
 
     public EmployeeService( EmployeeRepository repository )
     {
         this.employeeRepository = repository;
+        this.encoder = new BCryptPasswordEncoder();
     }
 
     @Transactional
     public Employee saveEmployee( Employee employee )
     {
+        employee.setPassword( encoder.encode( employee.getPassword() ) );
         return employeeRepository.save( employee );
     }
 
@@ -43,5 +48,11 @@ public class EmployeeService {
     public void deleteEmployee( Employee employee )
     {
         employeeRepository.delete( employee );
+    }
+
+    public Boolean passwordValidation( Employee employee )
+    {
+
+        return encoder.matches( employee.getPassword(), employeeRepository.findTopByLogin( employee.getLogin() ) );
     }
 }

@@ -100,5 +100,4 @@ public class CustomerController {
 
         return ResponseEntity.status( HttpStatus.OK ).body( "User deleted successfully" );
     }
-
 }

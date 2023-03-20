@@ -90,4 +90,15 @@ public class EmployeeController {
 
         return ResponseEntity.status( HttpStatus.OK ).body( "User deleted successfully" );
     }
+
+    @PostMapping( "/login" )
+    public ResponseEntity<Employee> checkPassword( @RequestBody Employee employee )
+    {
+        if ( !employeeService.passwordValidation( employee ) )
+        {
+            return ResponseEntity.status( HttpStatus.UNAUTHORIZED ).build();
+        }
+
+        return ResponseEntity.status( HttpStatus.OK ).build();
+    }
 }
