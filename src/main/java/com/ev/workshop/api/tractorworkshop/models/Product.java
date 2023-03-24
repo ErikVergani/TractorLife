@@ -19,25 +19,11 @@ public class Product {
     
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
-    private Integer id;
-
-    @Column( nullable = false, length = 125 )
+    private int id;
     private String name;
-
-    @Column( nullable = false )
     private double buyPrice;
-
-    @Column( nullable = false )
     private double sellPrice;
-
-    @Column( nullable = false )
-    private Integer qtyStock;
-
-    @OneToOne
-    @JoinColumn( name = "ref_category", referencedColumnName = "id" )
-    private ProductCategory categoryId;
-
-    @OneToOne
-    @JoinColumn( name = "ref_metricUnit", referencedColumnName = "id" )
-    private MetricUnit metricUnitId;
+    private int qtyStock;
+    private int categoryId;
+    private int metricUnitId;
 }

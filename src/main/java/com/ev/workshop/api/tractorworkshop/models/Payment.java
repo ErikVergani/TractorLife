@@ -17,11 +17,7 @@ public class Payment {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
-    private Integer id;
-
-    @Column( nullable = false, length = 50 )
+    private int id;
     private String name;
-
-    @Column( nullable = false )
-    private Integer days;
+    private int days;
 }

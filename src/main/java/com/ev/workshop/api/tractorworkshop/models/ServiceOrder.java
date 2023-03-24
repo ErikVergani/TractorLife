@@ -21,28 +21,11 @@ public class ServiceOrder {
     
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
-    private Integer id;
-
-    @Column( nullable = false )
+    private int id;
     private Date serviceDate;
-
-    @OneToOne
-    @JoinColumn( name = "ref_user", referencedColumnName = "id" )
-    private User userId;
-
-    @Column( nullable = false )
+    private int userId;
     private double soValue;
-
-    @Column( nullable = false )
-    private Integer serviceProducts;
-
-    @OneToOne
-    @JoinColumn( name = "ref_payment", referencedColumnName = "id" )
-    private Payment paymentId;
-
-    @Column( nullable = false )
-    private double discount;
-
-    @Column( nullable = false )
-    private Integer state;
+    private int serviceProducts;
+    private int paymentId;
+    private int state;
 }

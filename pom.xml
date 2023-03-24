@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.ev.workshop.api</groupId>
-	<artifactId>tractorworkshop</artifactId>
+	<artifactId>tractorlife</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>tractorworkshop</name>
 	<description>Demo project for Spring Boot</description>
@@ -43,6 +43,12 @@
             <artifactId>lombok</artifactId>
             <version>1.18.26</version>
             <scope>provided</scope>
+        </dependency>
+
+		<dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>4.3.0</version>
         </dependency>
 
 		<dependency>

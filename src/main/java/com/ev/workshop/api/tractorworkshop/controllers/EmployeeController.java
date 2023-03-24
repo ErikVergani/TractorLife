@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ev.workshop.api.tractorworkshop.dtos.EmployeeDto;
 import com.ev.workshop.api.tractorworkshop.models.Employee;
-import com.ev.workshop.api.tractorworkshop.models.User;
 import com.ev.workshop.api.tractorworkshop.services.EmployeeService;
 
 import jakarta.validation.Valid;
@@ -33,11 +31,8 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<Employee> saveEmployee( @RequestBody @Valid EmployeeDto employeeDto )
+    public ResponseEntity<Employee> saveEmployee( @RequestBody Employee employee )
     {
-        Employee employee = new Employee();
-        BeanUtils.copyProperties( employeeDto, employee );
-
         return ResponseEntity.status( HttpStatus.CREATED ).body( employeeService.saveEmployee( employee ) );
     }
 
@@ -54,11 +49,15 @@ public class EmployeeController {
         return ResponseEntity.status( HttpStatus.CREATED ).body( employeeOptional.get() );
     }
 
-    @PutMapping( "/{id}" )
-    public ResponseEntity<Object> updateEmployee( @PathVariable( value = "id" ) Integer id, @RequestBody @Valid EmployeeDto employeeDto )
+    @GetMapping( "/oi/{login}" )
+    public ResponseEntity<Employee> getEmployee( @PathVariable( value = "login" ) String id )
     {
-        User u = new User();
-        u.setId(1);
+        return ResponseEntity.status( HttpStatus.CREATED ).body(employeeService.passwordValidation( id ) );
+    }
+
+    @PutMapping( "/{id}" )
+    public ResponseEntity<Object> updateEmployee( @PathVariable( value = "id" ) Integer id, @RequestBody Employee employee )
+    {
         Optional<Employee> employeeOptional = employeeService.getEmployeeById( id );
 
         if ( !employeeOptional.isPresent() )
@@ -66,12 +65,12 @@ public class EmployeeController {
             return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( "User not found" );
         }
 
-        var employee = employeeOptional.get();
+        // @TODO: 23/03/2023 Necessário fazer o update das demais coisas da classe User
 
-        employee.setLogin( employeeDto.getLogin() );
-        employee.setPassword( employeeDto.getPassword() );
-        employee.setSalary( employeeDto.getSalary() );
-        employee.setEndDate( employeeDto.getEndDate() );
+        employee.setLogin( employee.getLogin() );
+        employee.setPassword( employee.getPassword() );
+        employee.setSalary( employee.getSalary() );
+        employee.setEndDate( employee.getEndDate() );
 
         return ResponseEntity.status( HttpStatus.OK ).body( employeeService.saveEmployee( employee ) );
     }
@@ -89,16 +88,5 @@ public class EmployeeController {
         employeeService.deleteEmployee( employeeOptional.get() );
 
         return ResponseEntity.status( HttpStatus.OK ).body( "User deleted successfully" );
-    }
-
-    @PostMapping( "/login" )
-    public ResponseEntity<Employee> checkPassword( @RequestBody Employee employee )
-    {
-        if ( !employeeService.passwordValidation( employee ) )
-        {
-            return ResponseEntity.status( HttpStatus.UNAUTHORIZED ).build();
-        }
-
-        return ResponseEntity.status( HttpStatus.OK ).build();
     }
 }

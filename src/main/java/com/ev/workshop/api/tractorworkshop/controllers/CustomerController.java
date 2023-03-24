@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ev.workshop.api.tractorworkshop.dtos.CustomerDto;
 import com.ev.workshop.api.tractorworkshop.models.Customer;
 import com.ev.workshop.api.tractorworkshop.models.User;
 import com.ev.workshop.api.tractorworkshop.services.CustomerService;
@@ -33,11 +32,8 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<User> saveCustumer( @RequestBody @Valid CustomerDto customerDto )
+    public ResponseEntity<User> saveCustumer( @RequestBody Customer customer )
     {
-        Customer customer = new Customer();
-        BeanUtils.copyProperties( customerDto, customer );
-
         return ResponseEntity.status( HttpStatus.CREATED ).body( customerService.saveCustomer( customer ) );
     }
 
@@ -61,7 +57,7 @@ public class CustomerController {
     }
 
     @PutMapping( "/{id}" )
-    public ResponseEntity<Object> updateCustumer( @PathVariable( value = "id" ) Integer id, @RequestBody @Valid CustomerDto customerDto )
+    public ResponseEntity<Object> updateCustumer( @PathVariable( value = "id" ) Integer id, @RequestBody Customer customer )
     {
         Optional<Customer> userOptional = customerService.getCustomerById( id );
 
@@ -70,18 +66,16 @@ public class CustomerController {
             return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( "User not found" );
         }
 
-        var customer = userOptional.get();
-
-        customer.setName( customerDto.getName() );
-        customer.setCpf( customerDto.getCpf() );
-        customer.setAddress( customerDto.getAddress() );
-        customer.setPhoneNumber1( customerDto.getPhoneNumber1() );
-        customer.setPhoneNumber2( customerDto.getPhoneNumber2() );
-        customer.setCity( customerDto.getCity() );
-        customer.setState( customerDto.getState() );
-        customer.setEmail( customerDto.getEmail() );
-        customer.setBalanceLimit( customerDto.getBalanceLimit() );
-        customer.setDebitBalance( customerDto.getDebitBalance() );
+        customer.setName( customer.getName() );
+        customer.setCpf( customer.getCpf() );
+        customer.setAddress( customer.getAddress() );
+        customer.setPhoneNumber1( customer.getPhoneNumber1() );
+        customer.setPhoneNumber2( customer.getPhoneNumber2() );
+        customer.setCity( customer.getCity() );
+        customer.setEnable( customer.isEnable() );
+        customer.setEmail( customer.getEmail() );
+        customer.setBalanceLimit( customer.getBalanceLimit() );
+        customer.setDebitBalance( customer.getDebitBalance() );
 
         return ResponseEntity.status( HttpStatus.OK ).body( customerService.saveCustomer( customer ) );
     }

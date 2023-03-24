@@ -19,10 +19,6 @@ public class City
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private Integer id;
-    
-    @Column( nullable = false, length = 75 )
     private String name;
-
-    @Column( nullable = false, length = 2 )
     private String country;
 }

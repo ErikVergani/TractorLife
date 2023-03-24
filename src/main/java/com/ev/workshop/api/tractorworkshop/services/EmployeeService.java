@@ -50,9 +50,8 @@ public class EmployeeService {
         employeeRepository.delete( employee );
     }
 
-    public Boolean passwordValidation( Employee employee )
+    public Employee passwordValidation( String login )
     {
-
-        return encoder.matches( employee.getPassword(), employeeRepository.findTopByLogin( employee.getLogin() ) );
+        return employeeRepository.findTopByLogin( login );
     }
 }
