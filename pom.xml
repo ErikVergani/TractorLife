@@ -11,8 +11,8 @@
 	<groupId>com.ev.workshop.api</groupId>
 	<artifactId>tractorlife</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>tractorworkshop</name>
-	<description>Demo project for Spring Boot</description>
+	<name>tractorlife</name>
+	<description>It's a dream</description>
 	<properties>
 		<java.version>19</java.version>
 	</properties>
@@ -44,6 +44,10 @@
             <version>1.18.26</version>
             <scope>provided</scope>
         </dependency>
+	  	<dependency>
+	       <groupId>org.apache.tomcat.embed</groupId>
+		   <artifactId>tomcat-embed-jasper</artifactId>
+		</dependency>
 
 		<dependency>
             <groupId>com.auth0</groupId>

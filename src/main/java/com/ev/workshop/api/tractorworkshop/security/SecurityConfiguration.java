@@ -22,15 +22,15 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfiguration
 {
     @Autowired
-    private JwtAuthenticationProvider provider;   
-    
+    private JwtAuthenticationProvider provider;
+
     @Bean
     public SecurityFilterChain securityFilterChain( HttpSecurity http ) throws Exception
     {
         return http
                 .cors().and()
                 .csrf().disable()
-                .authorizeHttpRequests().anyRequest().authenticated().and()
+                .authorizeHttpRequests().anyRequest().permitAll().and().formLogin().loginPage("/login").and()
                 .sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS ).and()
                 .authenticationProvider( provider )
                 .apply( new CustomConfigurator() ).and()
@@ -49,7 +49,7 @@ public class SecurityConfiguration
 
         return source;
     }
-        
+
     public static class CustomConfigurator extends AbstractHttpConfigurer<CustomConfigurator, HttpSecurity>
     {
         @Override

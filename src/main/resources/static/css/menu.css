@@ -1,0 +1,36 @@
+*{
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#menu-h{
+    background-color: rgb(80, 77, 77);
+}
+
+#menu-h ul{
+    max-width: 75em;
+    list-style-type: none;
+    padding: 0;
+}
+
+#menu-h ul li{
+    display: inline;
+}
+
+#menu-h ul li a{
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    padding: 1em;
+    transition: background 0.3s;
+}
+
+#menu-h ul li a:hover{
+    background-color: blue;
+}
+
+#menu-h ul li:last-child a{
+    float: right;
+    background-color: blue;
+}
