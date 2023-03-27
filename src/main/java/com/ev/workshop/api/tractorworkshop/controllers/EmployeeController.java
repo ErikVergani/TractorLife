@@ -52,8 +52,10 @@ public class EmployeeController {
     @GetMapping( "/oi/{login}" )
     public ResponseEntity<Employee> getEmployee( @PathVariable( value = "login" ) String id )
     {
-        return ResponseEntity.status( HttpStatus.CREATED ).body(employeeService.passwordValidation( id ) );
+//        return ResponseEntity.status( HttpStatus.CREATED ).body(employeeService.passwordValidation( id ) );
+        return null;
     }
+
 
     @PutMapping( "/{id}" )
     public ResponseEntity<Object> updateEmployee( @PathVariable( value = "id" ) Integer id, @RequestBody Employee employee )

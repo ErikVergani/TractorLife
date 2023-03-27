@@ -7,13 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.ev.workshop.api.tractorworkshop.models.Customer;
 import com.ev.workshop.api.tractorworkshop.models.User;
@@ -22,7 +16,8 @@ import com.ev.workshop.api.tractorworkshop.services.CustomerService;
 import jakarta.validation.Valid;
 
 @Controller
-@RequestMapping("/customer")
+@CrossOrigin("*")
+@RequestMapping("/api/customer")
 public class CustomerController {
     
     final CustomerService customerService;
@@ -70,7 +65,6 @@ public class CustomerController {
         customer.setCpf( customer.getCpf() );
         customer.setAddress( customer.getAddress() );
         customer.setPhoneNumber1( customer.getPhoneNumber1() );
-        customer.setPhoneNumber2( customer.getPhoneNumber2() );
         customer.setCity( customer.getCity() );
         customer.setEnable( customer.isEnable() );
         customer.setEmail( customer.getEmail() );

@@ -1,36 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
 *{
-    margin: 0 auto;
+    margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    font-family: 'Poppins',sans-serif;
 }
 
-#menu-h{
-    background-color: rgb(80, 77, 77);
+.title{
+    background-color: rgb(204, 162, 24);
+    height: 100px;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+.content{
+    padding-left: 35%;
+    padding-top: 1%;
 }
 
-#menu-h ul{
-    max-width: 75em;
+.modules{
+ background-color: rgb(22, 58, 11);   
+ display: flex;
+ width: 100%;
+ height: 750px;
+ align-items: center;
+}
+
+.modules ul{
     list-style-type: none;
-    padding: 0;
+    display: flex;
 }
 
-#menu-h ul li{
+.modules ul li{
     display: inline;
+    border: 3px solid rgb(252, 251, 251);
+    margin-left: 55px;
+    padding-bottom: 1%;
 }
 
-#menu-h ul li a{
+.modules ul li a{
     display: inline-block;
     text-decoration: none;
-    color: #fff;
-    padding: 1em;
+    color: #ffffff;
+    font-size: 25px;
+    padding: 3em;
+    height: 10px;
     transition: background 0.3s;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
 }
 
-#menu-h ul li a:hover{
-    background-color: blue;
+.modules ul li:hover{
+    background-color: rgb(47, 117, 38);
 }
 
-#menu-h ul li:last-child a{
-    float: right;
-    background-color: blue;
+.modules ul li:last-child a{
+    /* float: right;
+    background-color: blue; */
 }

@@ -21,15 +21,16 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter
+public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter
 {
     private AuthenticationManager authManager;
 
-    public JWTAuthenticationFilter( AuthenticationManager authenticationManager )
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager )
     {
         this.authManager = authenticationManager;
 
-        // setFilterProcessesUrl( "/login" );
+         setFilterProcessesUrl( "/login" );
+
     }
 
     @Override
@@ -39,7 +40,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         {
             Employee  employee = new ObjectMapper().readValue( request.getInputStream(), Employee.class );
             return authManager.authenticate( new UsernamePasswordAuthenticationToken( employee.getLogin(), employee.getPassword(), new ArrayList<>() ) ) ;
-        } 
+        }
         
         catch ( Exception e )
         {

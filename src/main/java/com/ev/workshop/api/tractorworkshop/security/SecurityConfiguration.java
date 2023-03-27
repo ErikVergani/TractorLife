@@ -3,12 +3,12 @@ package com.ev.workshop.api.tractorworkshop.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -27,14 +27,36 @@ public class SecurityConfiguration
     @Bean
     public SecurityFilterChain securityFilterChain( HttpSecurity http ) throws Exception
     {
-        return http
-                .cors().and()
-                .csrf().disable()
-                .authorizeHttpRequests().anyRequest().permitAll().and().formLogin().loginPage("/login").and()
-                .sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS ).and()
-                .authenticationProvider( provider )
-                .apply( new CustomConfigurator() ).and()
-                .httpBasic().and()
+//        return http
+//                .cors().and()
+//                .csrf().disable().formLogin().loginPage("/login").loginProcessingUrl("/auth").and()
+//                .authorizeHttpRequests().requestMatchers("/login").permitAll().anyRequest().authenticated().and()
+//                .sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS ).and()
+//                .authenticationProvider( provider )
+//                .apply( new CustomConfigurator() ).and().logout().deleteCookies("JSESSIONID").clearAuthentication(true).invalidateHttpSession(true).and()
+//                .build();
+
+//        return http.csrf().disable()
+//                   .authorizeHttpRequests()
+//                   .requestMatchers("/resources/**", "/WEB-INF/**").permitAll()
+//                   .anyRequest().authenticated()
+//                   .and()
+//                   .formLogin().loginPage("/login").loginProcessingUrl("/menu").permitAll()
+//                   .and()
+//                   .logout().permitAll().and().authenticationProvider( provider ).apply( new CustomConfigurator() )
+//                   .and().httpBasic().and().build();
+
+        return http.csrf()
+                .disable()
+                .authorizeHttpRequests().requestMatchers("/login").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().successForwardUrl("/menu")
+                .and()
+                .logout()
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .and()
                 .build();
     }
 
@@ -56,7 +78,7 @@ public class SecurityConfiguration
         public void configure( HttpSecurity http ) throws Exception
         {
             AuthenticationManager authenticationManager = http.getSharedObject( AuthenticationManager.class );
-            http.addFilterAt( new JWTAuthenticationFilter( authenticationManager ), UsernamePasswordAuthenticationFilter.class );
+            http.addFilterAt( new JwtAuthenticationFilter( authenticationManager ), UsernamePasswordAuthenticationFilter.class );
             http.addFilterAt( new JWTAuthorizationFilter( authenticationManager ), BasicAuthenticationFilter.class );
         }
     }

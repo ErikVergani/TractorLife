@@ -49,9 +49,4 @@ public class EmployeeService {
     {
         employeeRepository.delete( employee );
     }
-
-    public Employee passwordValidation( String login )
-    {
-        return employeeRepository.findTopByLogin( login );
-    }
 }

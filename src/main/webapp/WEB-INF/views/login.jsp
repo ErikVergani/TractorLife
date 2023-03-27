@@ -12,7 +12,7 @@
     <section>
         <div class="form-box">
             <div class="form-value">
-                <form action="/login" method="POST">
+                <form method="POST" action="/login">
                     <h2>Login</h2>
                     <div class="inputbox">
                         <input id="username" type="text" name="username" required>

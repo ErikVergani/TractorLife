@@ -21,7 +21,6 @@ public class User {
     private String cpf;
     private String address;
     private String phoneNumber1;
-    private String phoneNumber2;
     private int city;
     @Enumerated( EnumType.STRING )
     private Role role;
