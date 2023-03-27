@@ -16,7 +16,7 @@
              <li><a href="">Clientes</a></li>
              <li><a href="">Relatórios</a></li>
              <li><a href="">Configurações</a></li>
-             <li><a href="">Sair</a></li>
+             <li><a href="/logout">Sair</a></li>
         </ul>
     </nav>
 </body>

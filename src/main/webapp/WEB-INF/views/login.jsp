@@ -12,20 +12,21 @@
     <section>
         <div class="form-box">
             <div class="form-value">
-                <form method="POST" action="menu">
+                <form action="/login" method="POST">
                     <h2>Login</h2>
                     <div class="inputbox">
-                        <input type="text" required>
+                        <input id="username" type="text" name="username" required>
                         <label for="">Usuário</label>
                     </div>
                     <div class="inputbox">
-                        <input type="password" required>
+                        <input id="password" type="password"  name="password" required>
                         <label for="">Senha</label>
                     </div>
                     <div class="forget">
                         <a href="">Esqueci minha senha</a>
                     </div>
-                    <button>Entrar</button>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+                    <button name="submit" type="submit">Entrar</button>
                 </form>
             </div>
         </div>
