@@ -27,7 +27,7 @@ public class SecurityConfiguration
                 .and()
                 .authorizeHttpRequests().anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").permitAll()
+                .formLogin().permitAll()
                 .and()
                 .logout().deleteCookies("JSESSIONID").invalidateHttpSession(true)
                 .and()
