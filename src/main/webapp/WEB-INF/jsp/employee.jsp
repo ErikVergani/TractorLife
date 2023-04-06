@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html lang="pt-BR" style="height: 935px;font-family: Roboto, sans-serif;">
+<html lang="en" style="height: 935px;font-family: Roboto, sans-serif;">
 
 <head>
     <meta charset="utf-8">
@@ -28,9 +28,12 @@
                         <li class="nav-item"><a class="nav-link active" href="/customer" style="color: rgba(0,0,0,0.9);font-family: Roboto, sans-serif;">Clientes</a></li>
                     </ul>
                     <ul class="navbar-nav nav-right">
+                        <li class="nav-item"><a class="nav-link active" href="reports" style="color: rgba(0,0,0,0.9);font-family: Roboto, sans-serif;">Relatórios</a></li>
+                    </ul>
+                    <ul class="navbar-nav nav-right">
                         <li class="nav-item"><a class="nav-link active" href="/index" style="color: rgba(0,0,0,0.9);font-family: Roboto, sans-serif;">Configurações</a></li>
                     </ul>
-                    <p class="ms-auto navbar-text actions" style="width: 132.922px;text-align: right;padding-left: 60px;"> <a class="btn btn-light action-button" role="button" href="signup.html" style="color: rgba(0,0,0,0.9);background: var(--bs-danger);border-radius: 10px;border-style: solid;border-color: rgba(0,0,0,0.9);font-size: 16px;padding: 5px 8px;text-align: center;">Logout</a></p>
+                    <p class="ms-auto navbar-text actions" style="width: 132.922px;text-align: right;padding-left: 60px;"> <a class="btn btn-light action-button" role="button" href="/logout" style="color: rgba(0,0,0,0.9);background: var(--bs-danger);border-radius: 10px;border-style: solid;border-color: rgba(0,0,0,0.9);font-size: 16px;padding: 5px 8px;text-align: center;">Logout</a></p>
                 </div>
             </div>
         </nav>
