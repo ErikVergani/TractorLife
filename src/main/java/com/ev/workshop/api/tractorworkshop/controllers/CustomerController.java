@@ -15,7 +15,7 @@ import com.ev.workshop.api.tractorworkshop.services.CustomerService;
 
 import jakarta.validation.Valid;
 
-@Controller
+@RestController
 @CrossOrigin("*")
 @RequestMapping("/api/customer")
 public class CustomerController {
@@ -31,6 +31,16 @@ public class CustomerController {
     {
         return ResponseEntity.status( HttpStatus.CREATED ).body( customerService.saveCustomer( customer ) );
     }
+
+    @GetMapping("getAll")
+    public  ResponseEntity<List<Customer>>  getAll( @RequestParam String name, @RequestParam String city,
+                               @RequestParam String enable )
+            throws Exception {
+
+        List<Customer> list = customerService.getAll(  name, city, Boolean.parseBoolean(enable) );
+        return ResponseEntity.status( HttpStatus.OK ).body( list );
+    }
+
 
     @GetMapping
     public ResponseEntity<List<Customer>> getCustumers()
@@ -51,10 +61,10 @@ public class CustomerController {
         return ResponseEntity.status( HttpStatus.CREATED ).body( optional.get() );
     }
 
-    @PutMapping( "/{id}" )
-    public ResponseEntity<Object> updateCustumer( @PathVariable( value = "id" ) Integer id, @RequestBody Customer customer )
+    @PutMapping( )
+    public ResponseEntity<Object> updateCustumer( @RequestBody Customer customer )
     {
-        Optional<Customer> userOptional = customerService.getCustomerById( id );
+        Optional<Customer> userOptional = customerService.getCustomerById( customer.getId() );
 
         if ( !userOptional.isPresent() )
         {

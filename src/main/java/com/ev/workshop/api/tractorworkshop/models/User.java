@@ -21,7 +21,7 @@ public class User implements GrantedAuthority {
     private String cpf;
     private String address;
     private String phoneNumber1;
-    private int city;
+    private String city;
     @Enumerated( EnumType.STRING )
     private Roles role;
     private boolean enable = true;

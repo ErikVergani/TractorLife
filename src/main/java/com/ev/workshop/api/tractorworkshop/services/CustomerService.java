@@ -24,6 +24,10 @@ public class CustomerService {
         this.customerRepository = repository;
     }
 
+    public List<Customer> getAll( String name, String city, boolean enable) {
+        return customerRepository.find( name, city, enable );
+    }
+
     @Transactional
     public Customer saveCustomer( Customer customer )
     {

@@ -1,3 +1,8 @@
+<%@ page import="com.ev.workshop.api.tractorworkshop.services.CustomerService" %>
+<%@ page import="com.ev.workshop.api.tractorworkshop.repositories.CustomerRepository" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.ev.workshop.api.tractorworkshop.models.Customer" %>
+<%@ page import="org.springframework.beans.factory.annotation.Autowired" %>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en" style="height: 935px;font-family: Roboto, sans-serif;">
@@ -40,6 +45,7 @@
         <div style="height: 98%;width: 50%;margin-top: 51px;">
             <h1 class="text-start" style="text-align: center;margin-left: 17%;width: 533px;font-size: 44px;height: 65.1875px;">Gerenciamento de clientes</h1>
             <form style="height: 88%;margin: 0px;margin-left: 20%;width: 60%;padding-left: 15px;border-radius: 35px;border-style: solid;border-color: rgb(204,204,204);" id="form">
+                <div class="input-group" style="display: none;"><input class="form-control" type="text" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldId"></div>
                 <div class="input-group" style="display: block;"><span class="input-group-text" style="margin-top: 15px;width: 50%;margin-left: 14px;padding-left: 35px;border-radius: 93px 0px 0px 6px;border-top-right-radius: 25px;background: rgb(255,255,255);">Nome</span><input class="form-control" type="text" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldName" required=""></div>
                 <div class="input-group" style="display: block;"><span class="input-group-text" style="margin-top: 15px;width: 50%;border-radius: 67px 0px 0px 6px;margin-left: 14px;padding-left: 35px;">CPF</span><input class="form-control" type="text" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldCpf"></div>
                 <div class="input-group" style="display: block;"><span class="input-group-text" style="margin-top: 15px;width: 50%;border-radius: 67px 0px 0px 6px;margin-left: 14px;padding-left: 35px;">Endereço</span><input class="form-control" type="text" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldAddress"></div>
@@ -63,10 +69,17 @@
                 <h1 style="width: 100%;margin-left: 30px;">Lista de Clientes</h1>
             </div>
             <div class="text-center" style="width: 1015px;margin-left: 60px;margin-top: -11px;">
-                <h3>Filtros</h3><input type="text" style="margin-right: 15px;" placeholder="ID" name="filterId"><input type="text" style="margin-right: 15px;" name="filterName" placeholder="Nome"><input type="text" style="margin-right: 15px;" name="filterCity" placeholder="Cidade"><input type="checkbox" name="filterEnable" style="height: 17px;"><span style="padding-left: 7px;font-size: 25px;">Ativo</span><button class="btn btn-primary" type="button" style="margin-left: 30px;">Imprimir</button><button class="btn btn-primary" type="button" style="margin-left: 30px;">Buscar</button>
+                <h3>Filtros</h3>
+                <input type="text" style="margin-right: 15px;" placeholder="ID" id="filterId">
+                <input type="text" style="margin-right: 15px;" id="filterName" placeholder="Nome">
+                <input type="text" style="margin-right: 15px;" id="filterCity" placeholder="Cidade">
+                <input type="checkbox" id="filterEnable" style="height: 17px;">
+                <span style="padding-left: 7px;font-size: 25px;">Ativo</span>
+                <button class="btn btn-primary" type="button" style="margin-left: 30px;">Imprimir</button>
+                <button class="btn btn-primary" type="button" style="margin-left: 30px;" onclick="refresh()">Buscar</button>
             </div>
             <div class="table-responsive" style="margin-top: 30px;height: 80%;margin-left: 15px;margin-right: 15px;border-style: solid;border-color: rgb(204,204,204);">
-                <table class="table">
+                <table class="table" id="dataTable">
                     <thead>
                         <tr class="text-start" style="color: rgb(204,204,204);border-width: 0px;border-style: solid;">
                             <th style="border-width: 1px;border-style: solid;">ID</th>
@@ -79,7 +92,8 @@
                             <th style="border-width: 1px;border-style: solid;border-left-style: solid;color: rgb(204, 204, 204);">Ativo</th>
                         </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody>
+                    </tbody>
                 </table>
             </div>
         </div>
