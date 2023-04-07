@@ -5,3 +5,8 @@ td
     font-weight: bold;
     font-size: 20px;
 }
+
+.selected
+{
+    background-color: rgb(14 11 4 / 48%);
+}

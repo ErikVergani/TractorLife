@@ -1,65 +1,56 @@
 _selectedRow = null;
-function cpfMask( cpf ){
-   
-   var v = cpf.value;
-   
-   if ( isNaN( v[v.length-1] ) ) 
-   { // impede entrar outro caractere que não seja número
-      cpf.value = v.substring( 0, v.length-1 );
-      return;
-   }
-   
-   cpf.setAttribute( "maxlength", "14" ); 
-   if ( v.length == 3 || v.length == 7 ) cpf.value += ".";
-   if ( v.length == 11 ) cpf.value += "-";
-}
-
 async  function send()
     {
-       fieldName = document.getElementById("fieldName");
-       fieldCpf = document.getElementById("fieldCpf");
-       fieldAddress = document.getElementById("fieldAddress");
-       fieldPhone = document.getElementById("fieldPhone");
-       fieldCity = document.getElementById("fieldCity");
-       fieldEmail = document.getElementById("fieldEmail");
-       fieldCredit = document.getElementById("fieldCredit");
-       checkboxField = document.getElementById("checkboxEnable");
+        fieldName = document.getElementById("fieldName");
+        fieldCpf = document.getElementById("fieldCpf");
+        fieldAddress = document.getElementById("fieldAddress");
+        fieldPhone = document.getElementById("fieldPhone");
+        fieldCity = document.getElementById("fieldCity");
+        fieldEmail = document.getElementById("fieldEmail");
+        fieldCredit = document.getElementById("fieldCredit");
+        checkboxField = document.getElementById("checkboxEnable");
 
-       idField =  document.getElementById("fieldId");
+        idField =  document.getElementById("fieldId");
 
-       values = {}
+        values = {}
 
         if (  idField.value.length > 0 )
         {
             values.id = idField.value
         }
-       values.name = fieldName.value;
-       values.cpf = fieldCpf.value;
-       values.address = fieldAddress.value;
-       values.phoneNumber1 = fieldPhone.value;
-       values.city = fieldCity.value;
-       values.email = fieldEmail.value;
-       values.balanceLimit = fieldCredit.value;
-       values.enable = checkboxField.checked;
-       values.role =  "CUSTOMER";
+        values.name = fieldName.value;
+        values.cpf = fieldCpf.value;
+        values.address = fieldAddress.value;
+        values.phoneNumber1 = fieldPhone.value;
+        values.city = fieldCity.value;
+        values.email = fieldEmail.value;
+        values.balanceLimit = fieldCredit.value;
+        values.enable = checkboxField.checked;
+        values.role =  "CUSTOMER";
 
-       fetch('http://localhost:8080/api/customer', {
-          method:  (  idField.value.length > 0 ) ? "PUT" : "POST",
-          headers: {
-             'Accept': 'application/json',
-             'Content-Type': 'application/json'
-          },
-          body: JSON.stringify( values )
-       })
-           .then( function ( response){
-              if ( response.status == ( 201 ||  200 ) )
-              {
-                  alert("Usuário salvo com sucesso!")
-              }
-           } )
+        fetch('http://localhost:8080/api/customer', {
+            method:  (  idField.value.length > 0 ) ? "PUT" : "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify( values )
+        })
+            .then( function ( response){
+                if ( response.status == 201 || response.status == 200 )
+                {
+                    alert( "Usuário salvo com sucesso!" )
+                    document.getElementById("form").reset();
+                    refresh();
+                }
+
+                else
+                {
+                   response.text().then( function (text){ alert( text ) } );
+                }
+            } )
             .catch( error =>  alert( error ) );
 
-       document.getElementById("form").reset();
     }
 
     refresh = function () {
@@ -120,11 +111,12 @@ async  function send()
                    fieldCredit.value = this.value.balanceLimit;
                    checkboxField.checked = this.value.enable;
 
-                   if (_selectedRow != null) {
-                      _selectedRow.setAttribute("class", null);
+                   if ( _selectedRow != null )
+                   {
+                      _selectedRow.classList.remove("selected");
                    }
 
-                   this.setAttribute("class", "selected");
+                   this.classList.add( "selected" );
 
                    _selectedRow = this;
                 }
@@ -132,3 +124,58 @@ async  function send()
           }
        }
     }
+
+function cpfMask( input )
+{
+    let inputLength = input.value.length
+
+
+    if ( inputLength == 3 || inputLength == 7 ) {
+        input.value += '.'
+    } else if (inputLength == 11) {
+        input.value += '-'
+    }
+
+    return input;
+}
+
+
+function mascaraTelefone( event ) {
+    let tecla = event.key;
+    let telefone = event.target.value.replace( /\D+/g, "" );
+
+    if (/^[0-9]$/i.test( tecla ) ) {
+        telefone = telefone + tecla;
+        let tamanho = telefone.length;
+
+        if ( tamanho >= 12 ) {
+            return false;
+        }
+
+        if ( tamanho > 10 )
+        {
+            telefone = telefone.replace( /^(\d\d)(\d{5})(\d{4}).*/, "($1) $2-$3" );
+        }
+
+        else if ( tamanho > 5 )
+        {
+            telefone = telefone.replace( /^(\d\d)(\d{4})(\d{0,4}).*/, "($1) $2-$3" );
+        }
+
+        else if ( tamanho > 2 )
+        {
+            telefone = telefone.replace( /^(\d\d)(\d{0,5})/, "($1) $2" );
+        }
+
+        else
+        {
+            telefone = telefone.replace(/^(\d*)/, "($1");
+        }
+
+        event.target.value = telefone;
+    }
+
+    if ( !["Backspace", "Delete", "Tab"].includes( tecla ) ) {
+        return false;
+    }
+}

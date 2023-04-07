@@ -28,10 +28,9 @@ public class CustomerService {
         return customerRepository.find( name, city, enable );
     }
 
-    @Transactional
-    public Customer saveCustomer( Customer customer )
+    public Optional<Customer> getCustomerByCpf( String cpf )
     {
-        return customerRepository.save( customer );
+        return customerRepository.findByCpf( cpf );
     }
 
     public Optional<Customer> getCustomerById( Integer id )
@@ -41,6 +40,11 @@ public class CustomerService {
 
     public List<Customer> getCustomers() {
         return customerRepository.findAll();
+    }
+    @Transactional
+    public Customer saveCustomer( Customer customer )
+    {
+        return customerRepository.save( customer );
     }
 
     @Transactional

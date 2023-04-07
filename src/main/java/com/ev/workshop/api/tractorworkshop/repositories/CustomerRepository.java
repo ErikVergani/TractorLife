@@ -6,6 +6,7 @@ import com.ev.workshop.api.tractorworkshop.models.Customer;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * UserRepository
@@ -14,6 +15,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     @Query("SELECT a FROM Customer a WHERE a.name like %?1%" +
             " and a.city like %?2%" +
-            " and a.enable = ?3 ")
+            " and a.enable = ?3")
     List<Customer> find( String name, String city, boolean enable);
+
+    Optional<Customer> findByCpf( String cpf );
 }

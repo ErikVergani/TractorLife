@@ -3,6 +3,8 @@ package com.ev.workshop.api.tractorworkshop.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import com.ev.workshop.api.tractorworkshop.util.CustomerValidator;
+import com.ev.workshop.api.tractorworkshop.util.UserValidator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,15 +23,23 @@ import jakarta.validation.Valid;
 public class CustomerController {
     
     final CustomerService customerService;
+    private CustomerValidator validator = new CustomerValidator();
 
     public CustomerController( CustomerService customerService ) {
         this.customerService = customerService;
     }
 
     @PostMapping
-    public ResponseEntity<User> saveCustumer( @RequestBody Customer customer )
+    public ResponseEntity<Object> saveCustumer( @RequestBody Customer customer ) throws  Exception
     {
-        return ResponseEntity.status( HttpStatus.CREATED ).body( customerService.saveCustomer( customer ) );
+        validator.setSource( customer );
+        validator.setService( customerService );
+
+        String errors = validator.validate();
+
+        return errors.isEmpty() ?
+                ResponseEntity.status( HttpStatus.CREATED ).body( customerService.saveCustomer( customer ) )
+                : ResponseEntity.status( HttpStatus.BAD_REQUEST).body( errors );
     }
 
     @GetMapping("getAll")

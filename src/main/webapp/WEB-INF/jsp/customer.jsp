@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700">
     <link rel="stylesheet" href="/assets/css/Banner-Heading-Image-images.css">
     <link rel="stylesheet" href="/assets/css/Black-Navbar.css">
+    <link rel="stylesheet" href="/assets/css/table.css">
     <script src="/assets/js/customer.js"></script>
 </head>
 
@@ -45,14 +46,37 @@
         <div style="height: 98%;width: 50%;margin-top: 51px;">
             <h1 class="text-start" style="text-align: center;margin-left: 17%;width: 533px;font-size: 44px;height: 65.1875px;">Gerenciamento de clientes</h1>
             <form style="height: 88%;margin: 0px;margin-left: 20%;width: 60%;padding-left: 15px;border-radius: 35px;border-style: solid;border-color: rgb(204,204,204);" id="form">
-                <div class="input-group" style="display: none;"><input class="form-control" type="text" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldId"></div>
-                <div class="input-group" style="display: block;"><span class="input-group-text" style="margin-top: 15px;width: 50%;margin-left: 14px;padding-left: 35px;border-radius: 93px 0px 0px 6px;border-top-right-radius: 25px;background: rgb(255,255,255);">Nome</span><input class="form-control" type="text" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldName" required=""></div>
-                <div class="input-group" style="display: block;"><span class="input-group-text" style="margin-top: 15px;width: 50%;border-radius: 67px 0px 0px 6px;margin-left: 14px;padding-left: 35px;">CPF</span><input class="form-control" type="text" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldCpf"></div>
-                <div class="input-group" style="display: block;"><span class="input-group-text" style="margin-top: 15px;width: 50%;border-radius: 67px 0px 0px 6px;margin-left: 14px;padding-left: 35px;">Endereço</span><input class="form-control" type="text" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldAddress"></div>
-                <div class="input-group" style="display: block;"><span class="input-group-text" style="margin-top: 15px;width: 50%;border-radius: 67px 0px 0px 6px;margin-left: 14px;padding-left: 35px;">Telefone</span><input class="form-control" type="text" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldPhone"></div>
-                <div class="input-group" style="display: block;"><span class="input-group-text" style="margin-top: 15px;width: 50%;border-radius: 67px 0px 0px 6px;margin-left: 14px;padding-left: 35px;">Email</span><input class="form-control" type="text" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldEmail"></div>
-                <div class="input-group" style="display: block;"><span class="input-group-text" style="margin-top: 15px;width: 50%;border-radius: 67px 0px 0px 6px;margin-left: 14px;padding-left: 35px;">Cidade</span><input class="form-control" type="text" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldCity"></div>
-                <div class="input-group" style="display: block;"><span class="input-group-text" style="margin-top: 15px;width: 50%;border-radius: 67px 0px 0px 6px;margin-left: 14px;padding-left: 35px;">Limite de crédito</span><input class="form-control" type="text" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldCredit"></div>
+                <div class="input-group" style="display: none;">
+                    <input class="form-control" type="text" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldId">
+                </div>
+                <div class="input-group" style="display: block;">
+                    <span class="input-group-text" style="margin-top: 15px;width: 50%;margin-left: 14px;padding-left: 35px;border-radius: 93px 0px 0px 6px;border-top-right-radius: 25px;background: rgb(255,255,255);">Nome</span>
+                    <input class="form-control" type="text" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldName" required>
+                </div>
+                <div class="input-group" style="display: block;">
+                    <span class="input-group-text" style="margin-top: 15px;width: 50%;border-radius: 67px 0px 0px 6px;margin-left: 14px;padding-left: 35px;">CPF</span>
+                    <input class="form-control" type="text" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldCpf" maxlength="14" onkeyup="return cpfMask(this)">
+                </div>
+                <div class="input-group" style="display: block;">
+                    <span class="input-group-text" style="margin-top: 15px;width: 50%;border-radius: 67px 0px 0px 6px;margin-left: 14px;padding-left: 35px;">Endereço</span>
+                    <input class="form-control" type="text" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldAddress">
+                </div>
+                <div class="input-group" style="display: block;">
+                    <span class="input-group-text" style="margin-top: 15px;width: 50%;border-radius: 67px 0px 0px 6px;margin-left: 14px;padding-left: 35px;">Telefone</span>
+                    <input class="form-control" type="text" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldPhone" onkeydown="return mascaraTelefone(event)">
+                </div>
+                <div class="input-group" style="display: block;">
+                    <span class="input-group-text" style="margin-top: 15px;width: 50%;border-radius: 67px 0px 0px 6px;margin-left: 14px;padding-left: 35px;">Email</span>
+                    <input class="form-control" type="email" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldEmail" >
+                </div>
+                <div class="input-group" style="display: block;">
+                    <span class="input-group-text" style="margin-top: 15px;width: 50%;border-radius: 67px 0px 0px 6px;margin-left: 14px;padding-left: 35px;">Cidade</span>
+                    <input class="form-control" type="text" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldCity">
+                </div>
+                <div class="input-group" style="display: block;">
+                    <span class="input-group-text" style="margin-top: 15px;width: 50%;border-radius: 67px 0px 0px 6px;margin-left: 14px;padding-left: 35px;">Limite de crédito</span>
+                    <input class="form-control" type="text" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldCredit">
+                </div>
                 <div class="input-group" style="display: block;"></div>
                 <div class="input-group" style="display: block;"></div>
                 <div class="d-xxl-flex justify-content-xxl-center align-items-xxl-center" style="display: flex;text-align: center;margin-top: 9px;">
@@ -73,7 +97,7 @@
                 <input type="text" style="margin-right: 15px;" placeholder="ID" id="filterId">
                 <input type="text" style="margin-right: 15px;" id="filterName" placeholder="Nome">
                 <input type="text" style="margin-right: 15px;" id="filterCity" placeholder="Cidade">
-                <input type="checkbox" id="filterEnable" style="height: 17px;">
+                <input type="checkbox" id="filterEnable" style="height: 17px;" checked="true">
                 <span style="padding-left: 7px;font-size: 25px;">Ativo</span>
                 <button class="btn btn-primary" type="button" style="margin-left: 30px;">Imprimir</button>
                 <button class="btn btn-primary" type="button" style="margin-left: 30px;" onclick="refresh()">Buscar</button>
