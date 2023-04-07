@@ -75,7 +75,7 @@
                 </div>
                 <div class="input-group" style="display: block;">
                     <span class="input-group-text" style="margin-top: 15px;width: 50%;border-radius: 67px 0px 0px 6px;margin-left: 14px;padding-left: 35px;">Limite de crédito</span>
-                    <input class="form-control" type="text" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldCredit">
+                    <input class="form-control" type="text" style="width: 95%;border-radius: 35px;border-width: 0px;" id="fieldCredit" onkeydown="return onlyNum(event)">
                 </div>
                 <div class="input-group" style="display: block;"></div>
                 <div class="input-group" style="display: block;"></div>
@@ -94,7 +94,7 @@
             </div>
             <div class="text-center" style="width: 1015px;margin-left: 60px;margin-top: -11px;">
                 <h3>Filtros</h3>
-                <input type="text" style="margin-right: 15px;" placeholder="ID" id="filterId">
+                <input type="text" style="margin-right: 15px;" placeholder="CPF" id="filterCpf" onkeyup="return cpfMask(this)" >
                 <input type="text" style="margin-right: 15px;" id="filterName" placeholder="Nome">
                 <input type="text" style="margin-right: 15px;" id="filterCity" placeholder="Cidade">
                 <input type="checkbox" id="filterEnable" style="height: 17px;" checked="true">

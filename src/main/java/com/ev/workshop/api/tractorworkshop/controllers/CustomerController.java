@@ -3,19 +3,13 @@ package com.ev.workshop.api.tractorworkshop.controllers;
 import java.util.List;
 import java.util.Optional;
 
-import com.ev.workshop.api.tractorworkshop.util.CustomerValidator;
 import com.ev.workshop.api.tractorworkshop.util.UserValidator;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.ev.workshop.api.tractorworkshop.models.Customer;
-import com.ev.workshop.api.tractorworkshop.models.User;
 import com.ev.workshop.api.tractorworkshop.services.CustomerService;
-
-import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin("*")
@@ -23,7 +17,7 @@ import jakarta.validation.Valid;
 public class CustomerController {
     
     final CustomerService customerService;
-    private CustomerValidator validator = new CustomerValidator();
+    private UserValidator validator = new UserValidator();
 
     public CustomerController( CustomerService customerService ) {
         this.customerService = customerService;
@@ -33,7 +27,7 @@ public class CustomerController {
     public ResponseEntity<Object> saveCustumer( @RequestBody Customer customer ) throws  Exception
     {
         validator.setSource( customer );
-        validator.setService( customerService );
+        validator.setUserService( customerService );
 
         String errors = validator.validate();
 
@@ -43,11 +37,11 @@ public class CustomerController {
     }
 
     @GetMapping("getAll")
-    public  ResponseEntity<List<Customer>>  getAll( @RequestParam String name, @RequestParam String city,
+    public  ResponseEntity<List<Customer>>  getAll( @RequestParam String cpf ,@RequestParam String name, @RequestParam String city,
                                @RequestParam String enable )
             throws Exception {
 
-        List<Customer> list = customerService.getAll(  name, city, Boolean.parseBoolean(enable) );
+        List<Customer> list = customerService.getAll( cpf, name, city, Boolean.parseBoolean(enable) );
         return ResponseEntity.status( HttpStatus.OK ).body( list );
     }
 

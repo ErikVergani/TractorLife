@@ -54,13 +54,13 @@ async  function send()
     }
 
     refresh = function () {
-      idFilter = document.getElementById("filterId")
+      cpfFilter = document.getElementById("filterCpf")
       nameFilter = document.getElementById("filterName")
       cityFilter = document.getElementById("filterCity")
       enableFilter = document.getElementById("filterEnable")
 
        const Http = new XMLHttpRequest();
-       Http.open("GET", '/api/customer/getAll?id=' + idFilter.value +
+       Http.open("GET", '/api/customer/getAll?cpf=' + cpfFilter.value +
            '&name=' + nameFilter.value +
            '&city=' + cityFilter.value +
            '&enable=' + enableFilter.checked );
@@ -128,17 +128,19 @@ async  function send()
 function cpfMask( input )
 {
     let inputLength = input.value.length
+    let v = input.value;
 
-
-    if ( inputLength == 3 || inputLength == 7 ) {
+    if ( inputLength == 3 || inputLength == 7 )
+    {
         input.value += '.'
-    } else if (inputLength == 11) {
+    }
+    else if ( inputLength == 11 )
+    {
         input.value += '-'
     }
 
     return input;
 }
-
 
 function mascaraTelefone( event ) {
     let tecla = event.key;
@@ -170,6 +172,27 @@ function mascaraTelefone( event ) {
         else
         {
             telefone = telefone.replace(/^(\d*)/, "($1");
+        }
+
+        event.target.value = telefone;
+    }
+
+    if ( !["Backspace", "Delete", "Tab"].includes( tecla ) ) {
+        return false;
+    }
+}
+
+function onlyNum( input )
+{
+    let tecla = event.key;
+    let credit = event.target.value.replace( /\D+/g, "" );
+
+    if (/^[0-9]$/i.test( tecla ) ) {
+        credit += tecla;
+        let tamanho = credit.length;
+
+        if ( tamanho >= 6 ) {
+            return false;
         }
 
         event.target.value = telefone;

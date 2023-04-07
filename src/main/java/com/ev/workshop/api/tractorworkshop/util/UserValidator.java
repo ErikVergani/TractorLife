@@ -1,14 +1,17 @@
 package com.ev.workshop.api.tractorworkshop.util;
 
 import com.ev.workshop.api.tractorworkshop.models.Customer;
+import com.ev.workshop.api.tractorworkshop.models.Employee;
 import com.ev.workshop.api.tractorworkshop.services.CustomerService;
+import com.ev.workshop.api.tractorworkshop.services.UserService;
 
 public class UserValidator
 {
     Customer customer;
-    CustomerService service;
+    Employee employee;
+    UserService service;
 
-    public void setService( CustomerService service )
+    public void setUserService( UserService service )
     {
         this.service = service;
     }
@@ -49,7 +52,7 @@ public class UserValidator
         String customerCpf = customer.getCpf().replaceAll( "\\.|-", "" );
 
         return ( !( customerCpf.length() == 11 ) ) ? "• CPF inválido\n" :
-                                            service.getCustomerByCpf( customer.getCpf() ).isPresent() ? "CPF em uso" : "";
+                                            service.getUserByCpf( customer.getCpf() ).isPresent() ? "CPF em uso" : "";
     }
 
     private String validateAddress()
