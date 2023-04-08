@@ -1,27 +1,31 @@
 package com.ev.workshop.api.tractorworkshop.util;
 
-import com.ev.workshop.api.tractorworkshop.models.Customer;
-import com.ev.workshop.api.tractorworkshop.models.Employee;
-import com.ev.workshop.api.tractorworkshop.services.CustomerService;
+import com.ev.workshop.api.tractorworkshop.models.User;
 import com.ev.workshop.api.tractorworkshop.services.UserService;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class UserValidator
 {
-    Customer customer;
-    Employee employee;
-    UserService service;
+    private User user;
+    private UserService service;
+    private boolean ignoreCpf = false;
 
-    public void setUserService( UserService service )
+    public  UserValidator( User user, UserService service )
     {
+        this.user = user;
         this.service = service;
     }
-
-    public void setSource( Customer customer )
+    public void setUser( User user )
     {
-        this.customer = customer;
+        this.user = user;
     }
 
-    public String validate() throws Exception {
+    public String validate()
+    {
        String error = "";
 
        error += validateName();
@@ -36,7 +40,8 @@ public class UserValidator
 
     private String validateName()
     {
-        String customerName = customer.getName().replaceAll("\\s", "" );
+        user.setName( user.getName().toLowerCase() );
+        String customerName = user.getName().replaceAll("\\s", "" );
 
         if ( customerName.length() <=3 || customerName.length() > 35 || customerName.isBlank()
                                         || !customerName.matches( "^[A-Za-z]+$" ) )
@@ -49,33 +54,35 @@ public class UserValidator
 
     private String validateCpf()
     {
-        String customerCpf = customer.getCpf().replaceAll( "\\.|-", "" );
 
-        return ( !( customerCpf.length() == 11 ) ) ? "• CPF inválido\n" :
-                                            service.getUserByCpf( customer.getCpf() ).isPresent() ? "CPF em uso" : "";
+        String customerCpf = user.getCpf().replaceAll( "\\.|-", "" );
+
+        return ignoreCpf ? "" : ( !( customerCpf.length() == 11 ) ) ? "• CPF inválido\n" :
+                                            service.getUserByCpf( user.getCpf() ).isPresent() ? "• Já existe um cliente cadastrado com esse cpf\n" : "";
     }
 
     private String validateAddress()
     {
-        String customerAddress = customer.getAddress().replaceAll( "\\s", "" );
+        String customerAddress = user.getAddress().replaceAll( "\\s", "" );
         return customerAddress.length() <= 8 ? "• Endereço inválido\n" : "";
     }
 
     private String validatePhone()
     {
-        String customerPhone = customer.getPhoneNumber1().replaceAll( "-|\\(|\\)|\\s","" );
+        String customerPhone = user.getPhoneNumber1().replaceAll( "-|\\(|\\)|\\s","" );
 
         return ( customerPhone.length() < 10 || customerPhone.length() > 11 ) ? "• Telefone inválido\n" : "";
     }
 
     private String validateEmail()
     {
-        return customer.getEmail().matches( "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$" )
+        user.setEmail( user.getEmail().toLowerCase() );
+        return user.getEmail().matches( "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$" )
                                             ? "" : "• Email inválido\n";
     }
 
     private String validateCity()
     {
-        return customer.getCity().replaceAll( "\\s", "" ).length() < 3 ? "• Cidade Inválida\n" : "";
+        return user.getCity().replaceAll( "\\s", "" ).length() <= 3 ? "• Cidade Inválida\n" : "";
     }
 }

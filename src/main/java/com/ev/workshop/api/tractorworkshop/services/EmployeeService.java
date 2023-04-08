@@ -21,26 +21,30 @@ import lombok.Setter;
 @Getter
 @Setter
 @Service
-public class EmployeeService implements UserDetailsService {
-
-    public final EmployeeRepository employeeRepository; 
+public class EmployeeService
+    implements
+        UserDetailsService,
+            UserService
+{
+    public final EmployeeRepository employeeRepository;
     private PasswordEncoder encoder;
 
-    public EmployeeService( EmployeeRepository repository )
-    {
+    public EmployeeService(EmployeeRepository repository) {
         this.employeeRepository = repository;
         this.encoder = new BCryptPasswordEncoder();
     }
 
     @Transactional
-    public Employee saveEmployee( Employee employee )
-    {
+    public Employee saveEmployee(Employee employee) {
         employee.setPassword( encoder.encode( employee.getPassword() ) );
         return employeeRepository.save( employee );
     }
 
-    public Optional<Employee> getEmployeeById( Integer id )
-    {
+    public List<Employee> getAll( String name, String city, String login, boolean enable ) {
+        return employeeRepository.find( name, city, login, enable );
+    }
+
+    public Optional<Employee> getEmployeeById( Integer id ) {
         return employeeRepository.findById( id );
     }
 
@@ -49,15 +53,27 @@ public class EmployeeService implements UserDetailsService {
     }
 
     @Transactional
-    public void deleteEmployee( Employee employee )
-    {
+    public void deleteEmployee( Employee employee ) {
         employeeRepository.delete( employee );
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Employee employee = employeeRepository.findByLogin( username ).orElseThrow( () -> new UsernameNotFoundException( "User not found with username " + username ) );
+    public UserDetails loadUserByUsername( String username ) throws UsernameNotFoundException
+    {
+        Employee employee = employeeRepository.findByLogin(username).orElseThrow(() -> new UsernameNotFoundException("User not found with username " + username));
 
-        return new User( employee.getUsername(), employee.getPassword(), employee.isEnabled(),true,true,true,employee.getAuthorities() );
+        return new User( employee.getUsername(), employee.getPassword(), employee.isEnabled(), true, true, employee.isEnable(), employee.getAuthorities() );
+    }
+
+    public Optional<Employee> findByLogin(String login )
+    {
+        return employeeRepository.findByLogin( login );
+    }
+
+
+    @Override
+    public Optional<com.ev.workshop.api.tractorworkshop.models.User> getUserByCpf( String cpf )
+    {
+        return employeeRepository.findByCpf( cpf );
     }
 }

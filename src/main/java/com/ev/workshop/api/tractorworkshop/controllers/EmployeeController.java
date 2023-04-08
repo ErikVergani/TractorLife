@@ -3,6 +3,8 @@ package com.ev.workshop.api.tractorworkshop.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import com.ev.workshop.api.tractorworkshop.models.Customer;
+import com.ev.workshop.api.tractorworkshop.util.EmployeeValidator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,15 +28,28 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<Employee> saveEmployee( @RequestBody Employee employee )
+    public ResponseEntity<Object> saveEmployee( @RequestBody Employee employee )
     {
-        return ResponseEntity.status( HttpStatus.CREATED ).body( employeeService.saveEmployee( employee ) );
+        String errors = new EmployeeValidator( employee, employeeService ).validateEmployee();
+
+        return errors.isEmpty() ?
+                ResponseEntity.status( HttpStatus.CREATED ).body( employeeService.saveEmployee( employee ) )
+                : ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( errors );
     }
 
     @GetMapping
     public ResponseEntity<List<Employee>> getEmployee()
     {
         return ResponseEntity.status( HttpStatus.OK ).body( employeeService.getEmployers() );
+    }
+
+    @GetMapping("getAll")
+    public ResponseEntity<List<Employee>> getEmployee( @RequestParam String name ,@RequestParam String city, @RequestParam String login,
+                                                       @RequestParam String enable )
+    {
+
+        List<Employee> list = employeeService.getAll( name, city, login, Boolean.parseBoolean( enable ) );
+        return ResponseEntity.status( HttpStatus.OK ).body( list );
     }
     
     @GetMapping( "/{id}" )
@@ -44,32 +59,34 @@ public class EmployeeController {
         return ResponseEntity.status( HttpStatus.CREATED ).body( employeeOptional.get() );
     }
 
-    @GetMapping( "/oi/{login}" )
-    public ResponseEntity<Employee> getEmployee( @PathVariable( value = "login" ) String id )
+    @PutMapping()
+    public ResponseEntity<Object> updateEmployee( @RequestBody Employee employee )
     {
-//        return ResponseEntity.status( HttpStatus.CREATED ).body(employeeService.passwordValidation( id ) );
-        return null;
-    }
+        EmployeeValidator validator = new EmployeeValidator( employee, employeeService );
 
+        validator.setIgnoreLogin( true );
+        validator.setIgnoreCpf( true );
 
-    @PutMapping( "/{id}" )
-    public ResponseEntity<Object> updateEmployee( @PathVariable( value = "id" ) Integer id, @RequestBody Employee employee )
-    {
-        Optional<Employee> employeeOptional = employeeService.getEmployeeById( id );
+        String errors = validator.validateEmployee();
 
-        if ( !employeeOptional.isPresent() )
+        if ( errors.isEmpty() )
         {
-            return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( "User not found" );
+            Optional<Employee> employeeOptional = employeeService.getEmployeeById( employee.getId() );
+
+            employee.setName( employee.getName() );
+            employee.setCpf( employee.getCpf() );
+            employee.setAddress( employee.getAddress() );
+            employee.setPhoneNumber1( employee.getPhoneNumber1() );
+            employee.setCity( employee.getCity() );
+            employee.setEnable( employee.isEnable() );
+            employee.setEmail( employee.getEmail() );
+            employee.setLogin( employee.getLogin() );
+            employee.setPassword( employee.getPassword() );
+
+            return ResponseEntity.status( HttpStatus.OK ).body( employeeService.saveEmployee( employee ) );
         }
 
-        // @TODO: 23/03/2023 Necessário fazer o update das demais coisas da classe User
-
-        employee.setLogin( employee.getLogin() );
-        employee.setPassword( employee.getPassword() );
-        employee.setSalary( employee.getSalary() );
-        employee.setEndDate( employee.getEndDate() );
-
-        return ResponseEntity.status( HttpStatus.OK ).body( employeeService.saveEmployee( employee ) );
+        return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( errors );
     }
 
     @DeleteMapping( "/{id}" )

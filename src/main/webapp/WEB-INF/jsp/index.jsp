@@ -50,7 +50,7 @@
                         <div class="card-body p-4" style="margin-bottom: 70px;padding-top: 57px;padding-left: 20px;padding-bottom: 19px;">
                             <p class="text-primary card-text mb-0">Aumente a vida útil do seu equipamento</p>
                             <h4 class="card-title">Revisões de qualidade Tractorlife</h4>
-                            <p class="card-text">Todo equipamento merece ser bem cuidado, ele é responsável por garantir a sua produtividade, confira as ofertas de revisões disponíveis!</p>
+                            <p class="card-text">Todo equipamento merece ser bem cuidado, ele é responsável por garantir a sua produtividade. Confira as ofertas de revisões disponíveis!</p>
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                         <div class="card-body p-4" style="margin-bottom: 72px;padding-bottom: 0px;padding-top: 27px;">
                             <p class="text-primary card-text mb-0">O óleo é o sangue da máquina</p>
                             <h4 class="card-title">Produtos de qualidade</h4>
-                            <p class="card-text">Os produtos utilizados nas revisões são os melhores disponíveis no mercado, garantindo que o seu equipamento&nbsp; trabalhará com eficiência.</p>
+                            <p class="card-text">Os produtos utilizados nas revisões são os melhores disponíveis no mercado, garantindo que o seu equipamento&nbsp;trabalhará com eficiência.</p>
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                         <div class="card-body p-4" style="margin-bottom: 70px;">
                             <p class="text-primary card-text mb-0">Os mecânicos são os médicos</p>
                             <h4 class="card-title">Mão de obra qualificada</h4>
-                            <p class="card-text">Com uma mão de obra de ponta, a Tractorlife garante a qualidade dos seus serviços, todos mecânicos possuem treinamento de ponta.</p>
+                            <p class="card-text">Com uma mão de obra de ponta, a Tractorlife garante a qualidade dos seus serviços. Todos mecânicos possuem treinamento de ponta.</p>
                         </div>
                     </div>
                 </div>

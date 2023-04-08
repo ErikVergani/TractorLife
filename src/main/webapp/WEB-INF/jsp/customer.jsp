@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="/assets/css/Banner-Heading-Image-images.css">
     <link rel="stylesheet" href="/assets/css/Black-Navbar.css">
     <link rel="stylesheet" href="/assets/css/table.css">
-    <script src="/assets/js/customer.js"></script>
 </head>
 
 <body style="color: rgb(19,24,30);background: linear-gradient(68deg, #634100 13%, rgb(183,124,37) 51%, #634100 84%), rgba(255,255,255,0.21);height: 850px;">
@@ -123,6 +122,7 @@
         </div>
     </div>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/assets/js/customer.js"></script>
 </body>
 
 </html>

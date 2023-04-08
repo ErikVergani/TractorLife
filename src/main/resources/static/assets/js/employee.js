@@ -7,7 +7,8 @@ async  function send()
         fieldPhone = document.getElementById("fieldPhone");
         fieldCity = document.getElementById("fieldCity");
         fieldEmail = document.getElementById("fieldEmail");
-        fieldCredit = document.getElementById("fieldCredit");
+        fieldLogin = document.getElementById("fieldLogin");
+        fieldPass = document.getElementById("fieldPass");
         checkboxField = document.getElementById("checkboxEnable");
 
         idField =  document.getElementById("fieldId");
@@ -18,17 +19,19 @@ async  function send()
         {
             values.id = idField.value
         }
+
         values.name = fieldName.value;
         values.cpf = fieldCpf.value;
         values.address = fieldAddress.value;
         values.phoneNumber1 = fieldPhone.value;
         values.city = fieldCity.value;
         values.email = fieldEmail.value;
-        values.balanceLimit = fieldCredit.value;
+        values.login = fieldLogin.value;
+        values.password = fieldPass.value;
         values.enable = checkboxField.checked;
-        values.role =  "CUSTOMER";
+        values.role =  "OPERATOR";
 
-        fetch('http://localhost:8080/api/customer', {
+        fetch('http://localhost:8080/api/employee', {
             method:  (  idField.value.length > 0 ) ? "PUT" : "POST",
             headers: {
                 'Accept': 'application/json',
@@ -39,7 +42,7 @@ async  function send()
             .then( function ( response){
                 if ( response.status == 201 || response.status == 200 )
                 {
-                    alert( "Cliente salvo com sucesso!" )
+                    alert( "Funcionário salvo com sucesso!" )
                     document.getElementById("form").reset();
                     refresh();
                 }
@@ -53,30 +56,31 @@ async  function send()
 
     }
 
-    refresh = function () {
-      cpfFilter = document.getElementById("filterCpf")
-      nameFilter = document.getElementById("filterName")
-      cityFilter = document.getElementById("filterCity")
-      enableFilter = document.getElementById("filterEnable")
+refresh = function () {
+    filterName = document.getElementById("filterName")
+    filterCity = document.getElementById("filterCity")
+    filterLogin = document.getElementById("filterLogin")
+    filterEnable = document.getElementById("filterEnable")
 
        const Http = new XMLHttpRequest();
-       Http.open("GET", '/api/customer/getAll?cpf=' + cpfFilter.value +
-           '&name=' + nameFilter.value +
-           '&city=' + cityFilter.value +
-           '&enable=' + enableFilter.checked );
+       Http.open("GET", '/api/employee/getAll?name=' + filterName.value +
+           '&city=' + filterCity.value +
+           '&login=' + filterLogin.value +
+           '&enable=' + filterEnable.checked );
 
        Http.send();
 
        Http.onreadystatechange = function () {
           if (this.readyState == 4 && this.status == 200) {
-             var customers = JSON.parse(Http.responseText);
+             var customers = JSON.parse( Http.responseText );
 
             var table = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
 
              table.innerHTML = "";
 
-             for (i = 0; i < customers.length; i++) {
-                var row = table.insertRow(i);
+             for ( i = 0; i < customers.length; i++ )
+             {
+                var row = table.insertRow( i );
 
                 row.innerHTML = "<td>" + customers[i].id + "</td>" +
                     "<td>" + customers[i].name + "</td>" +
@@ -84,32 +88,33 @@ async  function send()
                     "<td>" + customers[i].address + "</td>" +
                     "<td>" + customers[i].phoneNumber1 + "</td>" +
                     "<td>" + customers[i].city + "</td>" +
-                    "<td>" + customers[i].balanceLimit + "</td>" +
+                    "<td>" + customers[i].email + "</td>" +
+                    "<td>" + customers[i].login + "</td>" +
                     "<td>" + ( (customers[i].enable) ? "Sim" : "Não" ) + "</td>";
 
 
                 row.value = customers[i];
 
                 row.onclick = function () {
-                    fieldId = document.getElementById("fieldId");
-                   fieldName = document.getElementById("fieldName");
-                   fieldCpf = document.getElementById("fieldCpf");
-                   fieldAddress = document.getElementById("fieldAddress");
-                   fieldPhone = document.getElementById("fieldPhone");
-                   fieldCity = document.getElementById("fieldCity");
-                   fieldEmail = document.getElementById("fieldEmail");
-                   fieldCredit = document.getElementById("fieldCredit");
-                   checkboxField = document.getElementById("checkboxEnable");
+                    idField =  document.getElementById("fieldId");
+                    fieldName = document.getElementById("fieldName");
+                    fieldCpf = document.getElementById("fieldCpf");
+                    fieldAddress = document.getElementById("fieldAddress");
+                    fieldPhone = document.getElementById("fieldPhone");
+                    fieldCity = document.getElementById("fieldCity");
+                    fieldEmail = document.getElementById("fieldEmail");
+                    fieldLogin = document.getElementById("fieldLogin");
+                    checkboxField = document.getElementById("checkboxEnable");
 
-                   fieldId.value = this.value.id;
-                   fieldName.value = this.value.name;
-                   fieldCpf.value = this.value.cpf;
-                   fieldAddress.value = this.value.address;
-                   fieldPhone.value = this.value.phoneNumber1;
-                   fieldCity.value = this.value.city;
-                   fieldEmail.value = this.value.email;
-                   fieldCredit.value = this.value.balanceLimit;
-                   checkboxField.checked = this.value.enable;
+                    idField.value = this.value.id;
+                    fieldName.value = this.value.name;
+                    fieldCpf.value = this.value.cpf;
+                    fieldAddress.value = this.value.address;
+                    fieldPhone.value = this.value.phoneNumber1;
+                    fieldCity.value = this.value.city;
+                    fieldEmail.value = this.value.email;
+                    fieldLogin.value = this.value.login;
+                    checkboxField.checked = this.value.enable;
 
                    if ( _selectedRow != null )
                    {
@@ -172,27 +177,6 @@ function mascaraTelefone( event ) {
         else
         {
             telefone = telefone.replace(/^(\d*)/, "($1");
-        }
-
-        event.target.value = telefone;
-    }
-
-    if ( !["Backspace", "Delete", "Tab"].includes( tecla ) ) {
-        return false;
-    }
-}
-
-function onlyNum( input )
-{
-    let tecla = event.key;
-    let credit = event.target.value.replace( /\D+/g, "" );
-
-    if (/^[0-9]$/i.test( tecla ) ) {
-        credit += tecla;
-        let tamanho = credit.length;
-
-        if ( tamanho >= 6 ) {
-            return false;
         }
 
         event.target.value = telefone;

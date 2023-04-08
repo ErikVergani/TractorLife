@@ -17,7 +17,6 @@ import com.ev.workshop.api.tractorworkshop.services.CustomerService;
 public class CustomerController {
     
     final CustomerService customerService;
-    private UserValidator validator = new UserValidator();
 
     public CustomerController( CustomerService customerService ) {
         this.customerService = customerService;
@@ -26,10 +25,7 @@ public class CustomerController {
     @PostMapping
     public ResponseEntity<Object> saveCustumer( @RequestBody Customer customer ) throws  Exception
     {
-        validator.setSource( customer );
-        validator.setUserService( customerService );
-
-        String errors = validator.validate();
+        String errors = new UserValidator( customer, customerService ).validate();
 
         return errors.isEmpty() ?
                 ResponseEntity.status( HttpStatus.CREATED ).body( customerService.saveCustomer( customer ) )
@@ -38,8 +34,7 @@ public class CustomerController {
 
     @GetMapping("getAll")
     public  ResponseEntity<List<Customer>>  getAll( @RequestParam String cpf ,@RequestParam String name, @RequestParam String city,
-                               @RequestParam String enable )
-            throws Exception {
+                               @RequestParam String enable ) {
 
         List<Customer> list = customerService.getAll( cpf, name, city, Boolean.parseBoolean(enable) );
         return ResponseEntity.status( HttpStatus.OK ).body( list );
@@ -68,24 +63,34 @@ public class CustomerController {
     @PutMapping( )
     public ResponseEntity<Object> updateCustumer( @RequestBody Customer customer )
     {
-        Optional<Customer> userOptional = customerService.getCustomerById( customer.getId() );
+        UserValidator validator =  new UserValidator( customer, customerService );
+        validator.setIgnoreCpf( true );
 
-        if ( !userOptional.isPresent() )
+        String errors = validator.validate();
+
+        if ( errors.isEmpty() )
         {
-            return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( "User not found" );
+            Optional<Customer> userOptional = customerService.getCustomerById( customer.getId() );
+
+            if ( !userOptional.isPresent() )
+            {
+                return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( "User not found" );
+            }
+
+            customer.setName( customer.getName() );
+            customer.setCpf( customer.getCpf() );
+            customer.setAddress( customer.getAddress() );
+            customer.setPhoneNumber1( customer.getPhoneNumber1() );
+            customer.setCity( customer.getCity() );
+            customer.setEnable( customer.isEnable() );
+            customer.setEmail( customer.getEmail() );
+            customer.setBalanceLimit( customer.getBalanceLimit() );
+            customer.setDebitBalance( customer.getDebitBalance() );
+
+            return ResponseEntity.status( HttpStatus.OK ).body( customerService.saveCustomer( customer ) );
         }
 
-        customer.setName( customer.getName() );
-        customer.setCpf( customer.getCpf() );
-        customer.setAddress( customer.getAddress() );
-        customer.setPhoneNumber1( customer.getPhoneNumber1() );
-        customer.setCity( customer.getCity() );
-        customer.setEnable( customer.isEnable() );
-        customer.setEmail( customer.getEmail() );
-        customer.setBalanceLimit( customer.getBalanceLimit() );
-        customer.setDebitBalance( customer.getDebitBalance() );
-
-        return ResponseEntity.status( HttpStatus.OK ).body( customerService.saveCustomer( customer ) );
+        return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( errors );
     }
 
     @DeleteMapping( "/{id}" )
