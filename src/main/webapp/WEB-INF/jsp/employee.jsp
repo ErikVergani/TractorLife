@@ -95,7 +95,7 @@
                 <input type="text" style="margin-right: 15px;" placeholder="Login" id="filterLogin">
                 <input type="checkbox" id="filterEnable" checked="true">
                 <span style="padding-left: 12px;font-size: 25px;">Ativo</span>
-                <button class="btn btn-primary" type="button" style="margin-left: 30px;">Imprimir</button>
+                <button class="btn btn-primary" type="button" style="margin-left: 30px;" onclick="report()">Imprimir</button>
                 <button class="btn btn-primary" type="button" style="margin-left: 30px;" onclick="refresh()">Buscar</button>
             </div>
             <div class="table-responsive" style="margin-top: 23px;height: 80%;margin-left: 15px;margin-right: 15px;border-style: solid;border-color: rgb(204,204,204);">

@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ev.workshop.api.tractorworkshop.models.Customer;
+import com.ev.workshop.api.tractorworkshop.reports.CustomerReport;
+import com.ev.workshop.api.tractorworkshop.reports.EmployeeReport;
 import com.ev.workshop.api.tractorworkshop.util.EmployeeValidator;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -103,4 +106,18 @@ public class EmployeeController {
 
         return ResponseEntity.status( HttpStatus.OK ).body( "User deleted successfully" );
     }
+
+    @GetMapping( value = "report" )
+    public void generateReport(@RequestParam String name ,@RequestParam String city, @RequestParam String login, @RequestParam String enable, HttpServletResponse response  ) throws Exception {
+
+        List<Employee> list = employeeService.getAll( name, city, login, Boolean.parseBoolean( enable ) );
+
+        EmployeeReport report = new EmployeeReport( list );
+
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=Funcionarios.pdf");
+
+        report.generate( response );
+    }
+
 }

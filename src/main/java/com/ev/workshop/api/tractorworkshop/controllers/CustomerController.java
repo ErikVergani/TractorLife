@@ -3,7 +3,9 @@ package com.ev.workshop.api.tractorworkshop.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import com.ev.workshop.api.tractorworkshop.reports.CustomerReport;
 import com.ev.workshop.api.tractorworkshop.util.UserValidator;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -60,7 +62,7 @@ public class CustomerController {
         return ResponseEntity.status( HttpStatus.CREATED ).body( optional.get() );
     }
 
-    @PutMapping( )
+    @PutMapping()
     public ResponseEntity<Object> updateCustumer( @RequestBody Customer customer )
     {
         UserValidator validator =  new UserValidator( customer, customerService );
@@ -92,6 +94,20 @@ public class CustomerController {
 
         return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( errors );
     }
+
+    @GetMapping( value = "report" )
+    public void generateReport(@RequestParam String cpf , @RequestParam String name, @RequestParam String city, @RequestParam String enable, HttpServletResponse response  ) throws Exception {
+
+        List<Customer> list = customerService.getAll( cpf, name, city, Boolean.parseBoolean( enable ) );
+
+        CustomerReport report = new CustomerReport( list );
+
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=Clientes.pdf");
+
+        report.generate( response );
+    }
+
 
     @DeleteMapping( "/{id}" )
     public ResponseEntity<Object> deleteCustumer( @PathVariable ( value = "id" ) Integer id )

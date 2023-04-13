@@ -130,6 +130,21 @@ refresh = function () {
        }
     }
 
+function report()
+{
+    filterName = document.getElementById("filterName")
+    filterCity = document.getElementById("filterCity")
+    filterLogin = document.getElementById("filterLogin")
+    filterEnable = document.getElementById("filterEnable")
+
+
+    window.open( '/api/employee/report?name=' + filterName.value +
+        '&city=' + filterCity.value +
+        '&login=' + filterLogin.value +
+        '&enable=' + filterEnable.checked);
+
+}
+
 function cpfMask( input )
 {
     let inputLength = input.value.length

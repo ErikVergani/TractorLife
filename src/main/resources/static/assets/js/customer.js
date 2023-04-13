@@ -125,6 +125,22 @@ async  function send()
        }
     }
 
+    function report()
+    {
+        cpfFilter = document.getElementById("filterCpf")
+        nameFilter = document.getElementById("filterName")
+        cityFilter = document.getElementById("filterCity")
+        enableFilter = document.getElementById("filterEnable")
+
+
+        window.open( '/api/customer/report?cpf=' + cpfFilter.value +
+                                                    '&name=' + nameFilter.value +
+                                                    '&city=' + cityFilter.value +
+                                                    '&enable=' + enableFilter.checked );
+
+    }
+
+
 function cpfMask( input )
 {
     let inputLength = input.value.length
