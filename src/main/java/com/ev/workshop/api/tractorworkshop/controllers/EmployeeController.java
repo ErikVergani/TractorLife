@@ -24,7 +24,7 @@ import jakarta.validation.Valid;
 @RequestMapping( "/api/employee" )
 public class EmployeeController {
 
-    final EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
     public EmployeeController( EmployeeService employeeService ) {
         this.employeeService = employeeService;

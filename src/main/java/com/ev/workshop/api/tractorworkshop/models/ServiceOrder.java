@@ -22,10 +22,16 @@ public class ServiceOrder {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private int id;
-    private Date serviceDate;
+    private Date serviceDate = new Date( System.currentTimeMillis() );
+
+    private Date serviceEndDate = new Date( System.currentTimeMillis() );
     private int userId;
     private double soValue;
     private int serviceProducts;
     private int paymentId;
-    private int state;
+    private boolean state;
+
+    private String title;
+
+    private String description;
 }

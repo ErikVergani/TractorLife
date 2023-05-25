@@ -59,7 +59,7 @@ public class CustomerController {
             return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( "customer not found" );
         }
 
-        return ResponseEntity.status( HttpStatus.CREATED ).body( optional.get() );
+        return ResponseEntity.status( HttpStatus.OK ).body( optional.get() );
     }
 
     @PutMapping()

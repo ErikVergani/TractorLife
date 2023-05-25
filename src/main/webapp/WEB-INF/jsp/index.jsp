@@ -21,7 +21,7 @@
                     <li class="nav-item"><a class="nav-link active" href="/index" style="color: rgba(0,0,0,0.9);font-family: Roboto, sans-serif;">Home</a></li>
                 </ul>
                 <ul class="navbar-nav nav-right">
-                    <li class="nav-item"><a class="nav-link active" href="/index" style="color: rgba(0,0,0,0.9);font-family: Roboto, sans-serif;">Ordens de serviço</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/so" style="color: rgba(0,0,0,0.9);font-family: Roboto, sans-serif;">Ordens de serviço</a></li>
                 </ul>
                 <ul class="navbar-nav nav-right">
                     <li class="nav-item"><a class="nav-link active" href="/customer" style="color: rgba(0,0,0,0.9);font-family: Roboto, sans-serif;">Clientes</a></li>
@@ -30,7 +30,7 @@
                     <li class="nav-item"><a class="nav-link active" href="/employee" style="color: rgba(0,0,0,0.9);font-family: Roboto, sans-serif;">Funcionários</a></li>
                 </ul>
                 <ul class="navbar-nav nav-right">
-                    <li class="nav-item"><a class="nav-link active" href="/index" style="color: rgba(0,0,0,0.9);font-family: Roboto, sans-serif;">Configurações</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/chart" style="color: rgba(0,0,0,0.9);font-family: Roboto, sans-serif;">Chart</a></li>
                 </ul>
                 <p class="ms-auto navbar-text actions" style="width: 132.922px;text-align: right;padding-left: 60px;"> <a class="btn btn-light action-button" role="button" href="/logout" style="color: rgba(0,0,0,0.9);background: var(--bs-danger);border-radius: 10px;border-style: solid;border-color: rgba(0,0,0,0.9);font-size: 16px;padding: 5px 8px;text-align: center;">Logout</a></p>
             </div>

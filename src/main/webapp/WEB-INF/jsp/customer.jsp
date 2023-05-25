@@ -1,8 +1,3 @@
-<%@ page import="com.ev.workshop.api.tractorworkshop.services.CustomerService" %>
-<%@ page import="com.ev.workshop.api.tractorworkshop.repositories.CustomerRepository" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.ev.workshop.api.tractorworkshop.models.Customer" %>
-<%@ page import="org.springframework.beans.factory.annotation.Autowired" %>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en" style="height: 935px;font-family: Roboto, sans-serif;">

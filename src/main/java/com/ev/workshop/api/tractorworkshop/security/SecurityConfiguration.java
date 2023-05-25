@@ -24,6 +24,7 @@ public class SecurityConfiguration
         return http
                 .httpBasic()
                 .and()
+                .cors().disable()
                 .authorizeHttpRequests().anyRequest().authenticated()
                 .and()
                 .formLogin().permitAll()
