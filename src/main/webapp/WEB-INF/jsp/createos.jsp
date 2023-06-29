@@ -57,7 +57,7 @@
                 <span style="width: 115px;font-size: 20px;font-family: Roboto, sans-serif;margin-left: 25px;">Data Fechamento:</span>
                 <input type="text" style="text-align: center;height: 40px;width: 170px;" id="fieldEndDate"disabled="">
                 <span style="width: 63px;font-size: 20px;font-family: Roboto, sans-serif;margin-left: 25px;">Cliente Id:</span>
-                <input type="text" style="text-align: center;height: 40px;width: 170px;" id="fieldCustomer" onblur="getUser()">
+                <input type="text" style="text-align: center;height: 40px;width: 170px;" id="fieldCustomer" onblur="getUser()" onfocus="showModal()">
                 <span style="width: 63px;font-size: 20px;font-family: Roboto, sans-serif;margin-left: 25px;">Cliente:</span>
                 <input type="text" style="text-align: center;height: 40px;width: 120px;" id="fieldCustomerName" disabled>
                 <span style="width: 105px;font-size: 20px;margin-left: 20px;font-family: Roboto, sans-serif;">Valor Total:</span>
@@ -90,6 +90,27 @@
                     </table>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div id="modal" style="background-color: rgb(255, 140, 35); position: absolute; width: 75vh; height: 45vh; top: calc(50% - 20vh); left: 32% " >
+        <div class="table-responsive" style="margin-top: 30px;height: 80%;margin-left: 15px;margin-right: 15px;border-style: solid;border-color: rgb(204,204,204);">
+            <table class="table" id="dataTable">
+                <thead>
+                <tr class="text-start" style="color: rgb(204,204,204);border-width: 0px;border-style: solid;">
+                    <th style="border-width: 1px;border-style: solid;">ID</th>
+                    <th style="border-width: 1px;border-style: solid;">Nome</th>
+                    <th style="border-width: 1px;border-style: solid;">CPF</th>
+                    <th style="border-width: 1px;border-style: solid;">Endereço</th>
+                    <th style="border-width: 1px;border-style: solid;">Telefone</th>
+                    <th style="border-width: 1px;border-style: solid;">Cidade</th>
+                    <th style="border-width: 1px;border-style: solid;">Limite Crédito</th>
+                    <th style="border-width: 1px;border-style: solid;border-left-style: solid;color: rgb(204, 204, 204);">Ativo</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
     </div>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>

@@ -139,8 +139,51 @@ function getUser()
             alert( 'Usuário não encontrado!' )
         }
     }
+    document.getElementById("modal").style.display='none';
 }
 
+function refreshUsers()
+{
+    const Http = new XMLHttpRequest();
+    Http.open("GET", '/api/customer/getAll?cpf=' + '' +
+        '&name=' + '' +
+        '&city=' + '' +
+        '&enable=' + true );
+
+    Http.send();
+
+    Http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var customers = JSON.parse(Http.responseText);
+
+            var table = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+
+            table.innerHTML = "";
+
+            for (i = 0; i < customers.length; i++) {
+                var row = table.insertRow(i);
+
+                row.innerHTML = "<td>" + customers[i].id + "</td>" +
+                    "<td>" + customers[i].name + "</td>" +
+                    "<td>" + customers[i].cpf + "</td>" +
+                    "<td>" + customers[i].address + "</td>" +
+                    "<td>" + customers[i].phoneNumber1 + "</td>" +
+                    "<td>" + customers[i].city + "</td>" +
+                    "<td>" + customers[i].balanceLimit + "</td>" +
+                    "<td>" + ( (customers[i].enable) ? "Sim" : "Não" ) + "</td>";
+
+
+                row.value = customers[i];
+            }
+        }
+    }
+}
+
+function showModal()
+{
+    refreshUsers()
+    document.getElementById("modal").style.display='block'
+}
 function closeSo()
 {
     fieldId = document.getElementById("soId");
@@ -285,15 +328,17 @@ function simpleValidation()
     return valid
 }
 
-function report()
+function report( isCsv )
 {
+    var  string = isCsv ? 'csv': 'pdf';
+
     filterTitle = document.getElementById("filterTitle")
     filterStartDate = document.getElementById("filterStartDate")
     filterEndDate = document.getElementById("filterEndDate")
     filterCustomer = document.getElementById("filterCustomer")
     filterClosed = document.getElementById("filterClosed")
 
-    window.open( '/api/os/report?filterTitle=' + filterTitle.value +
+    window.open( '/api/os/' + string + '?filterTitle=' + filterTitle.value +
         '&startDate=' + filterStartDate.value +
         '&endDate=' + filterEndDate.value +
         '&customer=' + filterCustomer.value +

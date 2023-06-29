@@ -1,6 +1,8 @@
 package com.ev.workshop.api.tractorworkshop.controllers;
 
+import com.ev.workshop.api.tractorworkshop.util.WeatherConversion;
 import jakarta.websocket.server.PathParam;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,6 +67,12 @@ public class PagesController
     public String chartPage()
     {
         return "charts";
+    }
+
+    @GetMapping("/temp")
+    public ResponseEntity<String> getWeather() throws Exception {
+        WeatherConversion conversion = new WeatherConversion();
+        return ResponseEntity.status( 200 ).body( conversion.getWather() );
     }
 
 }

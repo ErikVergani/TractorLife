@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -77,16 +80,39 @@ public class ServiceOrderController {
         return ResponseEntity.status( HttpStatus.CREATED ).body( service.addProduct( product ) );
     }
 
-    @GetMapping( value = "report" )
+    @GetMapping( value = "pdf" )
     public void generateReport( @RequestParam String filterTitle , @RequestParam String startDate, @RequestParam String endDate, @RequestParam String customer, @RequestParam String closed,  HttpServletResponse response  ) throws Exception
     {
         List<ServiceOrder> list = service.getAll( filterTitle, !startDate.isEmpty() ? sdf.parse( startDate ) : null, !endDate.isEmpty() ? sdf.parse( endDate ) : null, customer , Boolean.parseBoolean(closed) );
 
         OrdersReport report = new OrdersReport( list, customerService );
+
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "attachment; filename=Ordens.pdf");
 
         report.generate( response );
+    }
+
+    @GetMapping( value = "csv" )
+    public void generateCsv( @RequestParam String filterTitle , @RequestParam String startDate, @RequestParam String endDate, @RequestParam String customer, @RequestParam String closed,  HttpServletResponse response  ) throws Exception
+    {
+        List<ServiceOrder> list = service.getAll( filterTitle, !startDate.isEmpty() ? sdf.parse( startDate ) : null, !endDate.isEmpty() ? sdf.parse( endDate ) : null, customer , Boolean.parseBoolean(closed) );
+
+        response.setContentType("text/csv");
+        response.setHeader("Content-Disposition", "attachment; filename=OrdensServiço.csv");
+
+        ICsvBeanWriter csvWriter = new CsvBeanWriter( response.getWriter(), CsvPreference.STANDARD_PREFERENCE );
+        String[] csvHeader = { "ID", "Título", "Data Abertura", "Data Fechamento", "Cliente", "pgto", "Valor Total", "Ecerrada" };
+        String[] nameMapping = { "id", "title", "serviceDate", "serviceEndDate", "userId", "paymentId", "soValue", "state" };
+
+        csvWriter.writeHeader( csvHeader );
+
+        for ( ServiceOrder o : list )
+        {
+            csvWriter.write( o, nameMapping );
+        }
+
+        csvWriter.close();
     }
 
     @GetMapping( "getChartData" )

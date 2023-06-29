@@ -50,7 +50,8 @@
                 <input type="checkbox" id="filterClosed" style="height: 17px;">
                 <span style="padding-left: 7px;font-size: 25px;font-family: Roboto, sans-serif;">Fechada</span>
                 <button class="btn btn-primary" type="button" style="margin-left: 30px;font-family: Roboto, sans-serif;" onclick="search()">Buscar</button>
-                <button class="btn btn-primary" type="button" style="margin-left: 30px;font-family: Roboto, sans-serif;" onclick="report()">Imprimir</button>
+                <button class="btn btn-primary" type="button" style="margin-left: 30px;font-family: Roboto, sans-serif;" onclick="report( false )">Imprimir</button>
+                <button class="btn btn-primary" type="button" style="margin-left: 30px;font-family: Roboto, sans-serif;" onclick="report( true )">CSV</button>
                 <button class="btn btn-primary" type="button" style="margin-left: 30px;font-family: Roboto, sans-serif;" onclick="location.href='/addso';">Criar OS</button>
                 <button class="btn btn-primary" type="button" style="margin-left: 30px;font-family: Roboto, sans-serif;" onclick="editOs()">Editar OS</button>
             </div>

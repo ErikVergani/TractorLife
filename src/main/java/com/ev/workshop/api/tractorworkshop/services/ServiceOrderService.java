@@ -52,8 +52,8 @@ public class ServiceOrderService
     {
         List<Integer> data = new ArrayList<>();
 
-        data.add( repository.getAllByState( true ).size() );
         data.add( repository.getAllByState( false ).size() );
+        data.add( repository.getAllByState( true ).size() );
 
         return data;
 
